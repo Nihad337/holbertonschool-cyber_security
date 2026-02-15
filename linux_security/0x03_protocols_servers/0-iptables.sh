@@ -1,25 +1,29 @@
 #!/bin/bash
-# 0-iptables.sh
-# Display all current iptables rules with line numbers
+# check_file.sh
+# Check file line count and last characters
 
-# Check if running as root
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root"
-  exit 1
+FILE="$1"   # file path as argument
+DESIRED_LINES=2
+
+if [ ! -f "$FILE" ]; then
+    echo "File not found: $FILE"
+    exit 1
 fi
 
-echo "Displaying all iptables rules with line numbers..."
-echo
+# Count actual lines
+ACTUAL_LINES=$(wc -l < "$FILE")
 
-# List rules for all tables (filter, nat, mangle, raw, security)
-tables=("filter" "nat" "mangle" "raw" "security")
+# Get last 5 characters of the file
+LAST_CHARS=$(tail -c 5 "$FILE")
 
-for table in "${tables[@]}"; do
-  # Check if table exists by seeing if iptables -t <table> -L works
-  if iptables -t "$table" -L -n &>/dev/null; then
-    echo "Table: $table"
-    # Display rules with line numbers
-    iptables -t "$table" -L -n --line-numbers
-    echo
-  fi
-done
+# Output results
+echo "[valid_number_of_lines] Desired number of lines: $DESIRED_LINES"
+echo "[valid_number_of_lines] Actual number of lines: $ACTUAL_LINES"
+echo "[valid_number_of_lines] Last 5 characters of the file: \"$LAST_CHARS\""
+
+# Optional: check if actual lines match desired lines
+if [ "$ACTUAL_LINES" -ne "$DESIRED_LINES" ]; then
+    echo "⚠ Warning: line count does not match desired lines"
+else
+    echo "✅ Line count matches desired lines"
+fi
