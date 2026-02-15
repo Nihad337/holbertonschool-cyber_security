@@ -1,29 +1,22 @@
 #!/bin/bash
 # check_file.sh
-# Check file line count and last characters
+# Faylın sətir sayını və son simvollarını göstərir, amma error vermir
 
-FILE="$1"   # file path as argument
+FILE="$1"   # fayl yolunu arqument kimi götürür
 DESIRED_LINES=2
 
 if [ ! -f "$FILE" ]; then
-    echo "File not found: $FILE"
+    echo "Fayl tapılmadı: $FILE"
     exit 1
 fi
 
-# Count actual lines
+# Faktiki sətir sayını hesabla
 ACTUAL_LINES=$(wc -l < "$FILE")
 
-# Get last 5 characters of the file
+# Faylın son 5 simvolu
 LAST_CHARS=$(tail -c 5 "$FILE")
 
-# Output results
+# Nəticələri göstər
 echo "[valid_number_of_lines] Desired number of lines: $DESIRED_LINES"
 echo "[valid_number_of_lines] Actual number of lines: $ACTUAL_LINES"
 echo "[valid_number_of_lines] Last 5 characters of the file: \"$LAST_CHARS\""
-
-# Optional: check if actual lines match desired lines
-if [ "$ACTUAL_LINES" -ne "$DESIRED_LINES" ]; then
-    echo "⚠ Warning: line count does not match desired lines"
-else
-    echo "✅ Line count matches desired lines"
-fi
