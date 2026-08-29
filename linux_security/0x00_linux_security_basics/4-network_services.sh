@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo netstat -tulpan
+sudo netstat -lnptu

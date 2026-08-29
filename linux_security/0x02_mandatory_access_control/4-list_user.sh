@@ -1,2 +1,2 @@
 #!/bin/bash
-semanage login -l | grep user
+semanage user -l

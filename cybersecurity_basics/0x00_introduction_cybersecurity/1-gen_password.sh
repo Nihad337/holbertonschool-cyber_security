@@ -1,2 +1,2 @@
 #!/bin/bash
-tr -dc '[:alnum:]' < /dev/urandom | head -c "$1"; echo
+tr -cd A-Za-a0-9</dev/urandom | head -c $1
